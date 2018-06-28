@@ -1,0 +1,18 @@
+WSGIPythonPath $OPENID_DIR
+<VirtualHost *:80>
+        ServerAdmin $OPENID_ADMIN
+        ServerName $OPENID_SERVER
+
+        DocumentRoot /var/www/openid
+        ErrorLog $OPENID_DIR/logs/error.log
+        CustomLog $OPENID_DIR/logs/access.log combined
+
+        WSGIDaemonProcess openid processes=2 threads=8 display-name=openid home=$OPENID_DIR
+        <Directory />
+            AuthType None
+            Allow from all
+        </Directory>
+
+        WSGIScriptAlias / $OPENID_DIR/openid
+        WSGIProcessGroup openid
+</VirtualHost>
